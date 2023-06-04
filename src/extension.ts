@@ -1,5 +1,6 @@
 import * as vscode from 'vscode';
-import axios from 'axios';
+
+const outputChannel = vscode.window.createOutputChannel('Send Code');
 
 export function activate(context: vscode.ExtensionContext) {
   context.subscriptions.push(
@@ -17,14 +18,9 @@ async function sendCodeToServer() {
   }
 
   const code = editor.document.getText();
-  const serverUrl = 'https://yourserver.url/your-endpoint';
 
-  try {
-    const response = await axios.post(serverUrl, { code });
-    vscode.window.showInformationMessage('Code sent successfully!');
-  } catch (error) {
-    vscode.window.showErrorMessage('Failed to send code!');
-  }
+  outputChannel.appendLine(code);
+  outputChannel.show();
 }
 
 export function deactivate() {}
